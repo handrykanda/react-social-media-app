@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 //components
 import MyButton from "../../util/MyButton";
-//import AddPost from "../post/AddPost";
+import AddPost from "../posts/AddPost";
 //import Notifications from "./Notifications";
 
 //mui components
@@ -176,10 +176,11 @@ export default function Navbar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <PostAddIcon />
-        </IconButton>
-        <p>Add Post</p>
+        {/* // <IconButton aria-label="show 4 new mails" color="inherit">
+          <AddPost text="Add post" />
+       // </IconButton> */}
+        <AddPost text="Add post" />
+        {/* <p>Add Post</p> */}
       </MenuItem>
       <MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
@@ -235,7 +236,8 @@ export default function Navbar() {
                 <div className={classes.sectionDesktop}>
                   <Tooltip title="Add new post" placement="bottom-start">
                     <IconButton aria-label="app post" color="inherit">
-                      <PostAddIcon />
+                      {/* <PostAddIcon /> */}
+                      <AddPost text="" />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title="New comments" placement="bottom-start">

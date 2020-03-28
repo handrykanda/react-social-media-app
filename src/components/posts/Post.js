@@ -208,7 +208,7 @@ export default function Post(props) {
       <CardActions disableSpacing>
         <LikeButton postId={postId} />
         <span>{likeCount}</span>
-        <MyButton tip="comments">
+        <MyButton tip="comment this">
           <ChatIcon color="primary" />
         </MyButton>
         <span>{commentCount} comments</span>
