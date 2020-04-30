@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 //redux
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 //components
-import MyButton from "../../util/MyButton";
 import AddPost from "../posts/AddPost";
-//import Notifications from "./Notifications";
+import Notifications from "./Notifications";
 
 //mui components
 import { fade, makeStyles } from "@material-ui/core/styles";
@@ -14,47 +13,42 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import Button from "@material-ui/core/Button";
 import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
-import AddIcon from "@material-ui/icons/Add";
-import PostAddIcon from "@material-ui/icons/PostAdd";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   grow: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
-      display: "block"
-    }
+      display: "block",
+    },
   },
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(10),
-    marginLeft: theme.spacing(10),
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1),
     width: "50%",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(27),
-      width: "50%"
-    }
+      width: "50%",
+    },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -63,10 +57,10 @@ const useStyles = makeStyles(theme => ({
     pointerEvents: "none",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit"
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -75,29 +69,31 @@ const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: "20ch"
-    }
+      width: "60ch",
+    },
   },
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
-      display: "flex"
-    }
+      display: "flex",
+    },
   },
   sectionMobile: {
     display: "flex",
     [theme.breakpoints.up("md")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   small: {
     width: theme.spacing(3),
-    height: theme.spacing(3)
+    height: theme.spacing(3),
+    backgroundColor: "#fff",
+    color: "#001389",
   },
   accountCircle: {
     right: "3%",
-    position: "absolute"
-  }
+    position: "absolute",
+  },
 }));
 
 export default function Navbar() {
@@ -108,7 +104,7 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = event => {
+  const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -121,20 +117,20 @@ export default function Navbar() {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = event => {
+  const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
   // redux store access
   const { authenticated, imageUrl, username } = useSelector(
-    state => ({
+    (state) => ({
       authenticated: state.user.authenticated,
       imageUrl: state.user.credentials.imageUrl,
-      username: state.user.credentials.username
+      username: state.user.credentials.username,
     }),
     shallowEqual
   );
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -149,7 +145,11 @@ export default function Navbar() {
     >
       {authenticated ? (
         <Fragment>
-          <MenuItem component={Link} to="/profile" onClick={handleMenuClose}>
+          <MenuItem
+            component={Link}
+            to={`/users/${username}`}
+            onClick={handleMenuClose}
+          >
             Profile
           </MenuItem>
           <MenuItem component={Link} to="/login" onClick={handleMenuClose}>
@@ -176,28 +176,11 @@ export default function Navbar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        {/* // <IconButton aria-label="show 4 new mails" color="inherit">
+        <IconButton aria-label="add post" color="inherit">
           <AddPost text="Add post" />
-       // </IconButton> */}
-        <AddPost text="Add post" />
-        {/* <p>Add Post</p> */}
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
         </IconButton>
-        <p>Messages</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      <Notifications notText="Notifications" />
     </Menu>
   );
 
@@ -224,7 +207,7 @@ export default function Navbar() {
               placeholder="Search…"
               classes={{
                 root: classes.inputRoot,
-                input: classes.inputInput
+                input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
             />
@@ -236,28 +219,24 @@ export default function Navbar() {
                 <div className={classes.sectionDesktop}>
                   <Tooltip title="Add new post" placement="bottom-start">
                     <IconButton aria-label="app post" color="inherit">
-                      {/* <PostAddIcon /> */}
                       <AddPost text="" />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title="New comments" placement="bottom-start">
-                    <IconButton aria-label="show 4 new mails" color="inherit">
-                      <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                      </Badge>
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="New notifications" placement="bottom-start">
-                    <IconButton
-                      aria-label="show 17 new notifications"
-                      color="inherit"
-                    >
-                      <Badge badgeContent={17} color="secondary">
-                        <NotificationsIcon />
-                      </Badge>
-                    </IconButton>
-                  </Tooltip>
+
+                  <Notifications notText="" />
                 </div>
+                <div className={classes.sectionMobile}>
+                  <IconButton
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="true"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                </div>
+                {renderMobileMenu}
                 <Tooltip title="Profile" placement="bottom-start">
                   <IconButton
                     edge="end"
@@ -275,18 +254,6 @@ export default function Navbar() {
                   </IconButton>
                 </Tooltip>
               </Fragment>
-              <div className={classes.sectionMobile}>
-                <IconButton
-                  aria-label="show more"
-                  aria-controls={mobileMenuId}
-                  aria-haspopup="true"
-                  onClick={handleMobileMenuOpen}
-                  color="inherit"
-                >
-                  <MoreIcon />
-                </IconButton>
-              </div>
-              {renderMobileMenu}
             </Fragment>
           ) : (
             <Fragment>

@@ -24,3 +24,5 @@ yarn-error.log*
 
 #custom files
 ReactReduxClassBoilerPlate.js
+config.js
+package.json

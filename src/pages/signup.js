@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import AppIcon from "../assets/images/firebase.png";
+import AppIcon from "../assets/images/handry_icon.gif";
 import { Link } from "react-router-dom";
 
 //redux
@@ -15,8 +15,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const styles = theme => ({
-  ...theme.globalStyles
+const styles = (theme) => ({
+  ...theme.globalStyles,
 });
 
 class signup extends Component {
@@ -28,43 +28,43 @@ class signup extends Component {
       confirmPassword: "",
       username: "",
       loading: false,
-      errors: {}
+      errors: {},
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({
-        errors: nextProps.UI.errors
+        errors: nextProps.UI.errors,
       });
     }
   }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
     this.setState({
-      loading: true
+      loading: true,
     });
     const newUserData = {
       email: this.state.email,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
-      username: this.state.username
+      username: this.state.username,
     };
     //fire signupUser action
     this.props.signupUser(newUserData, this.props.history);
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   render() {
     const {
       classes,
-      UI: { loading }
+      UI: { loading },
     } = this.props;
     const { errors } = this.state;
     return (
@@ -78,10 +78,11 @@ class signup extends Component {
             className={classes.image}
           />
           <Typography variant="h5" className={classes.pageTitle}>
-            Create an account for free!
+            New account for free!
           </Typography>
           <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
             <TextField
+              autoComplete="off"
               className={classes.textField}
               id="username"
               name="username"
@@ -94,6 +95,7 @@ class signup extends Component {
               fullWidth
             />
             <TextField
+              autoComplete="off"
               className={classes.textField}
               id="email"
               name="email"
@@ -106,6 +108,7 @@ class signup extends Component {
               fullWidth
             />
             <TextField
+              autoComplete="off"
               className={classes.textField}
               id="password"
               name="password"
@@ -118,6 +121,7 @@ class signup extends Component {
               fullWidth
             />
             <TextField
+              autoComplete="off"
               className={classes.textField}
               id="confirmPassword"
               name="confirmPassword"
@@ -163,16 +167,16 @@ signup.propTypes = {
   classes: PropTypes.object.isRequired,
   signupUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  UI: PropTypes.object.isRequired
+  UI: PropTypes.object.isRequired,
 };
 
-const mapstateToProps = state => ({
+const mapstateToProps = (state) => ({
   user: state.user,
-  UI: state.UI
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
-  signupUser
+  signupUser,
 };
 
 export default connect(

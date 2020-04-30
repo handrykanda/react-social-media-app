@@ -1,19 +1,20 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { Link } from "react-router-dom";
+import moment from "moment";
 // MUI
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
-const styles = (theme) => ({
-  ...theme,
+const styles = theme => ({
+  ...theme.globalStyles,
   commentImage: {
-    maxWidth: '100%',
-    height: 100,
-    objectFit: 'cover',
-    borderRadius: '50%'
+    maxWidth: "100%",
+    height: 50,
+    width: 50,
+    objectFit: "cover",
+    borderRadius: "50%"
   },
   commentData: {
     marginLeft: 20
@@ -26,7 +27,7 @@ class Comments extends Component {
     return (
       <Grid container>
         {comments.map((comment, index) => {
-          const { body, createdAt, userImage, userHandle } = comment;
+          const { body, createdAt, userImage, username } = comment;
           return (
             <Fragment key={createdAt}>
               <Grid item sm={12}>
@@ -34,22 +35,22 @@ class Comments extends Component {
                   <Grid item sm={2}>
                     <img
                       src={userImage}
-                      alt="comment"
+                      alt="profile"
                       className={classes.commentImage}
                     />
                   </Grid>
-                  <Grid item sm={9}>
+                  <Grid item sm={10}>
                     <div className={classes.commentData}>
                       <Typography
-                        variant="h5"
+                        variant="h6"
                         component={Link}
-                        to={`/users/${userHandle}`}
+                        to={`/users/${username}`}
                         color="primary"
                       >
-                        {userHandle}
+                        {username}
                       </Typography>
                       <Typography variant="body2" color="textSecondary">
-                        {dayjs(createdAt).format('h:mm a, MMMM DD YYYY')}
+                        {moment(createdAt).format("HH:mm, DD MMM YYYY")}
                       </Typography>
                       <hr className={classes.invisibleSeparator} />
                       <Typography variabnt="body1">{body}</Typography>

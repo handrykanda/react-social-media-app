@@ -5,7 +5,7 @@ import {
   LOADING_USER,
   MARK_NOTIFICATIONS_READ,
   UNLIKE_POST,
-  LIKE_POST
+  LIKE_POST,
 } from "../types";
 
 const initialState = {
@@ -14,15 +14,15 @@ const initialState = {
   credentials: {},
   posts: [],
   likes: [],
-  notifications: []
+  notifications: [],
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_AUTHENTICATED:
       return {
         ...state,
-        authenticated: true
+        authenticated: true,
       };
 
     case SET_UNAUTHENTICATED:
@@ -32,12 +32,12 @@ export default function(state = initialState, action) {
       return {
         authenticated: true,
         loading: false,
-        ...action.payload
+        ...action.payload,
       };
     case LOADING_USER:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case LIKE_POST:
       return {
@@ -46,19 +46,21 @@ export default function(state = initialState, action) {
           ...state.likes,
           {
             username: state.credentials.username,
-            postId: action.payload.postId
-          }
-        ]
+            postId: action.payload.postId,
+          },
+        ],
       };
     case UNLIKE_POST:
       return {
         ...state,
-        likes: state.likes.filter(like => like.postId !== action.payload.postId)
+        likes: state.likes.filter(
+          (like) => like.postId !== action.payload.postId
+        ),
       };
     case MARK_NOTIFICATIONS_READ:
-      state.notifications.forEach(not => (not.read = true));
+      state.notifications.forEach((not) => (not.read = true));
       return {
-        ...state
+        ...state,
       };
     default:
       return state;

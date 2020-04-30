@@ -19,9 +19,13 @@ import AuthRoute from "./util/AuthRoute";
 import home from "./pages/home";
 import login from "./pages/login";
 import signup from "./pages/signup";
+import user from "./pages/user";
 
 //components
 import Navbar from "./components/layout/Navbar";
+import { BASE_URL } from "./util/config";
+
+axios.defaults.baseURL = BASE_URL;
 
 const theme = createMuiTheme(myTheme);
 
@@ -49,6 +53,12 @@ function App() {
               <Route exact path="/" component={home} />
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
+              <Route exact path="/users/:username" component={user} />
+              <Route
+                exact
+                path="/users/:username/post/:postId"
+                component={user}
+              />
             </Switch>
           </div>
         </Router>

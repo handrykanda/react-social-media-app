@@ -5,11 +5,11 @@ import moment from "moment";
 //components
 import MyButton from "../../util/MyButton";
 import DeletePost from "./DeletePost";
-//import Postialog from "./Postialog";
+import PostDialog from "./PostDialog";
 import LikeButton from "./LikeButton";
 
 //redux
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 
 //mui stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,9 +23,6 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 //import { Link } from "@material-ui/core";
@@ -35,43 +32,29 @@ import MenuItem from "@material-ui/core/MenuItem";
 // Icons
 import ChatIcon from "@material-ui/icons/Chat";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
-    //marginLeft: "20%",
-    marginBottom: 20
-  },
-  title: {
-    //fontSize: 20
-  },
-  media: {
-    height: 60,
-    width: 70
-    //objectFit: "cover"
-    //paddingTop: "56.25%" // 16:9
-  },
-  imgPost: {
-    height: "100%",
-    width: "100%"
-    //objectFit: "cover"
+    position: "relative",
+    marginBottom: 20,
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   avatar: {
     backgroundColor: "#001389",
-    objectFit: "cover"
+    objectFit: "cover",
   },
   deleteMenuItem: {
     // width: "50%"
-  }
+  },
 }));
 
 export default function Post(props) {
@@ -79,14 +62,11 @@ export default function Post(props) {
   const [expanded, setExpanded] = React.useState(false); //hooks
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  //const filename = userImage.split("/")[userImage.split("/").length - 1];
-  // let hasDP = filename.startsWith("no-img.png") ? null : username;
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleEllipsisClick = event => {
+  const handleEllipsisClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -96,12 +76,12 @@ export default function Post(props) {
 
   // redux store access
   const { user } = useSelector(
-    state => ({
-      user: state.user
+    (state) => ({
+      user: state.user,
     }),
     shallowEqual
   );
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const {
     body,
@@ -110,8 +90,8 @@ export default function Post(props) {
     username,
     postId,
     likeCount,
-    commentCount
-  } = props.postData;
+    commentCount,
+  } = props.post;
 
   const { authenticated } = user;
 
@@ -197,24 +177,27 @@ export default function Post(props) {
         }
         subheader={moment(createdAt || moment.now()).fromNow()}
       />
-      <CardMedia>
-        <img className={classes.imgPost} src={userImage} alt={username} />
-      </CardMedia>
+      <CardMedia></CardMedia>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {body}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <LikeButton postId={postId} />
+        <LikeButton postId={postId} username={username} />
         <span>{likeCount}</span>
         <MyButton tip="comment this">
           <ChatIcon color="primary" />
         </MyButton>
         <span>{commentCount} comments</span>
+        <PostDialog
+          postId={postId}
+          username={username}
+          openDialog={props.openDialog}
+        />
         <IconButton
           className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded
+            [classes.expandOpen]: expanded,
           })}
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -226,14 +209,13 @@ export default function Post(props) {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body2" color="textSecondary" paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet
-            over medium-high heat. Add chicken, shrimp and chorizo, and cook,
-            stirring occasionally until lightly browned, 6 to 8 minutes.
-            Transfer shrimp to a large plate and set aside, leaving chicken and
-            chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes,
-            onion, salt and pepper, and cook, stirring often until thickened and
-            fragrant, about 10 minutes. Add saffron broth and remaining 4 1/2
-            cups chicken broth; bring to a boil.
+            This won't be a real social networking site. It's kinda like a
+            training ground, real matches are coming soon that needs real
+            grounds.
+            <span role="img" aria-label="p">
+              {" "}
+              😎😎😎
+            </span>
           </Typography>
         </CardContent>
       </Collapse>

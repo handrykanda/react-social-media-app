@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import AppIcon from "../assets/images/firebase.png";
+import AppIcon from "../assets/images/handry_icon.gif";
 import { Link } from "react-router-dom";
 
 //redux
@@ -15,8 +15,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const styles = theme => ({
-  ...theme.globalStyles
+const styles = (theme) => ({
+  ...theme.globalStyles,
 });
 
 class login extends Component {
@@ -25,13 +25,13 @@ class login extends Component {
     this.state = {
       email: "",
       password: "",
-      errors: {}
+      errors: {},
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({
-        errors: nextProps.UI.errors
+        errors: nextProps.UI.errors,
       });
     }
   }
@@ -50,27 +50,27 @@ class login extends Component {
   //   }
   // }
 
-  handleSubmit = event => {
+  handleSubmit = (event) => {
     event.preventDefault();
 
     const userData = {
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
     //fire loginUser action
     this.props.loginUser(userData, this.props.history);
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   render() {
     const {
       classes,
-      UI: { loading }
+      UI: { loading },
     } = this.props;
     const { errors } = this.state;
     return (
@@ -86,8 +86,9 @@ class login extends Component {
           <Typography variant="h5" className={classes.pageTitle}>
             Welcome Back!
           </Typography>
-          <form noValidate autoComplete="" onSubmit={this.handleSubmit}>
+          <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
             <TextField
+              autoComplete="off"
               className={classes.textField}
               id="email"
               name="email"
@@ -100,6 +101,7 @@ class login extends Component {
               fullWidth
             />
             <TextField
+              autoComplete="off"
               className={classes.textField}
               id="password"
               name="password"
@@ -144,16 +146,16 @@ login.propTypes = {
   classes: PropTypes.object.isRequired,
   loginUser: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  UI: PropTypes.object.isRequired
+  UI: PropTypes.object.isRequired,
 };
 
-const mapstateToProps = state => ({
+const mapstateToProps = (state) => ({
   user: state.user,
-  UI: state.UI
+  UI: state.UI,
 });
 
 const mapActionsToProps = {
-  loginUser
+  loginUser,
 };
 
 export default connect(

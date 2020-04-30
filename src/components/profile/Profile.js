@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import EditDetails from "./EditDetails";
 import MyButton from "../../util/MyButton";
-//import ProfileSkeleton from "../../util/ProfileSkeleton";
+import ProfileSkeleton from "../../util/ProfileSkeleton";
 // MUI stuff
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import MuiLink from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
 // Icons
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
@@ -55,7 +56,20 @@ class Profile extends Component {
         <Paper className={classes.paper}>
           <div className={classes.profile}>
             <div className="image-wrapper">
-              <img src={imageUrl} alt="profile" className="profile-image" />
+              {imageUrl ? (
+                <img src={imageUrl} alt="profile" className="profile-image" />
+              ) : (
+                <Avatar
+                  width={150}
+                  height={150}
+                  style={{ marginLeft: "auto", marginRight: "auto" }}
+                  alt={username}
+                  src={imageUrl}
+                  aria-label="profile"
+                  className={classes.avatar}
+                ></Avatar>
+              )}
+
               <input
                 type="file"
                 id="imageInput"
@@ -134,8 +148,7 @@ class Profile extends Component {
         </Paper>
       )
     ) : (
-      //<ProfileSkeleton />
-      <p>Please wait...</p>
+      <ProfileSkeleton />
     );
 
     return profileMarkup;

@@ -13,7 +13,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
 //components
 import { deletePost } from "../../redux/actions/dataActions";
@@ -28,13 +27,13 @@ const styles = {
     fontWeight: 400,
     letterSpacing: "0.00938em",
     color: "inherit",
-    maxWidth: "100%"
-  }
+    maxWidth: "100%",
+  },
 };
 
 class DeletePost extends Component {
   state = {
-    open: false
+    open: false,
   };
   handleOpen = () => {
     this.setState({ open: true });
@@ -87,7 +86,7 @@ class DeletePost extends Component {
 DeletePost.propTypes = {
   deletePost: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  postId: PropTypes.string.isRequired
+  postId: PropTypes.string.isRequired,
 };
 
 export default connect(null, { deletePost })(withStyles(styles)(DeletePost));
